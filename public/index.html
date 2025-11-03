@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Md_FormModal Test</title>
+<style>
+/* Quick demo styles */
+.mv-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.mv-modal { background: #fff; padding: 20px; border-radius: 8px; min-width: 300px; max-width: 400px; }
+.mv-title { margin: 0 0 10px; }
+.mv-message { margin: 0 0 15px; }
+.mv-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+.mv-primary { background: #007bff; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+.mv-danger-btn { background: #dc3545; color: #fff; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+.mv-field { margin-bottom: 10px; display: flex; flex-direction: column; }
+.mv-input { padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+.mv-invalid { border-color: #dc3545; }
+.mv-valid { border-color: #28a745; }
+</style>
+</head>
+<body>
+<button id="infoBtn">Open Info Modal</button>
+<button id="formBtn">Open Form Modal</button>
+<button id="pinBtn">Open PIN Modal</button>
+
+<script type="module">
+import { Md_Modal, Md_FormModal } from './assets/js/components/modal.js';
+
+document.querySelector("#infoBtn").addEventListener("click", () => {
+    Md_Modal.info("Hello!", "This is an info modal.");
+});
+
+document.querySelector("#formBtn").addEventListener("click", async () => {
+    const data = await Md_FormModal.open({
+        title: "Custom Form",
+        fields: [
+            { name: "email", type: "email", required: true, placeholder: "Enter email" },
+            { name: "password", type: "password", required: true, placeholder: "Enter password" }
+        ]
+    });
+    console.log("Form submitted:", data);
+});
+
+document.querySelector("#pinBtn").addEventListener("click", async () => {
+    const pinData = await Md_FormModal.pin({ length: 6 });
+    console.log("PIN entered:", pinData);
+});
+</script>
+</body>
+</html>
